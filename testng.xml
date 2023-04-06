@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite1" parallel="tests" thread-count="2">
+  <listeners>
+    <listener class-name="com.icehrm_automation.utility.TestListeners"/>
+</listeners>
+  <test name="Regression">
+     <classes>
+       <class name="com.icehrm_automation.loginPage.Sample5"/>
+       <class name="com.icehrm_automation.empPage.EmployeeTest"/>
+       <class name="com.icehrm_automation.loginPage.LoginTest"/>
+       <class name="com.icehrm_automation.loginPage.Sample3"/>
+     </classes>
+  </test>
+</suite>
