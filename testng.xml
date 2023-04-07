@@ -6,7 +6,6 @@
 </listeners>
   <test name="Regression">
      <classes>
-       <class name="com.icehrm_automation.loginPage.Sample5"/>
        <class name="com.icehrm_automation.empPage.EmployeeTest"/>
        <class name="com.icehrm_automation.loginPage.LoginTest"/>
        <class name="com.icehrm_automation.loginPage.Sample3"/>
