@@ -21,7 +21,7 @@ import com.aventstack.extentreports.ExtentTest;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BaseClass {
-		protected WebDriver driver;
+		public WebDriver driver;
 		public ExtentTest log;
 		public ExtentReports extentReports;
 		public void launchBrowser(String browser) {
