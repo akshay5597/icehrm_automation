@@ -17,36 +17,19 @@ import org.testng.ITestResult;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
-public class TestListeners extends BaseClass implements ITestListener,ISuiteListener {
-	String reportPath;
-	public TestListeners() {
-		
-	}
+public class TestListeners implements ITestListener,ISuiteListener {
+	//String reportPath;
+	//ExtentReports extentReporter;
     @Override
     public void onStart(ISuite suite) {
     	System.out.println("This is onStart of ISuite from TestListeners");
     	//String suiteName=suite.getName();
     	//System.out.println(suiteName);
-    	LocalDateTime dateTime=LocalDateTime.now();
-    	String currentDateTime=dateTime.format(DateTimeFormatter.ofPattern("dd_MM_yyyy_hh_mm"));
-    	reportPath=System.getProperty("user.dir")+"/reports/"+"reports_"+currentDateTime;
-    	File file=new File(reportPath);
-    	if(!file.exists()) {
-    		file.mkdir();// create folder based on provided folderPath
-    	}
-    	String htmlReport=reportPath+"/AutomationReport.html";
-    	System.out.println(htmlReport);
-    	ExtentSparkReporter sparkReporter=new ExtentSparkReporter(htmlReport);
-    	extentReports=new ExtentReports();
-    	extentReports.attachReporter(sparkReporter);
-    	extentReports.setSystemInfo("user","cyber success");
-    	extentReports.setSystemInfo("OS","windows");
-    	extentReports.setSystemInfo("env","QA");
     }
     @Override
     public void onFinish(ISuite suite) {
     	System.out.println("This is onFinish of ISuite from TestListeners");
-    	extentReports.flush();
+    	//extentReports.flush();
     }
     @Override
     public void onStart(ITestContext context) {
@@ -55,12 +38,13 @@ public class TestListeners extends BaseClass implements ITestListener,ISuiteList
     @Override
     public void onFinish(ITestContext context) {
     	System.out.println("This is onFinish of ITestContext from TestListeners");
+    	ExtentTestManager.endTest();
     }
     @Override
     public void onTestStart(ITestResult result) {
     	System.out.println("This is onTestStart of ITestResult from TestListeners");
     	String methodName=result.getMethod().getMethodName();
-    	log=extentReports.createTest(methodName);
+        ExtentTestManager.createTest(methodName);
     }
     @Override
     public void onTestSuccess(ITestResult result) {
@@ -69,7 +53,9 @@ public class TestListeners extends BaseClass implements ITestListener,ISuiteList
     @Override
     public void onTestFailure(ITestResult result) {
     	System.out.println("This is onTestFailure of ITestResult from TestListeners");
-    	String screenshotPath=reportPath+"/"+result.getMethod().getMethodName()+".jpg";
+    	ExtentTestManager.getTest().fail(result.getThrowable());
+    	//captureScreenShot(result);
+    	/*String screenshotPath=reportPath+"/"+result.getMethod().getMethodName()+".jpg";
     	try {
     	TakesScreenshot takesScreenshot=(TakesScreenshot)driver;
     	File srcFile=takesScreenshot.getScreenshotAs(OutputType.FILE);
@@ -79,7 +65,7 @@ public class TestListeners extends BaseClass implements ITestListener,ISuiteList
     	}
     	log.fail(result.getThrowable().getMessage());
     	log.addScreenCaptureFromPath(screenshotPath,"failed screenshot");
-    }
+    }*/}
     @Override
     public void onTestSkipped(ITestResult result) {
     	System.out.println("This is onTestSkipped of ITestResult from TestListeners");
